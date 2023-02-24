@@ -27,7 +27,7 @@ const Stopwatch = () => {
       }
     }, 50);
     return () => clearInterval(secondsRef.current);
-  }, [isActive, seconds, minutes, hours]);
+  }, [isActive, seconds, minutes]);
 
   const onStartCount = () => {
     if (isActive) {
