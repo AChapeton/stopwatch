@@ -1,15 +1,21 @@
 import { useState, useEffect, useRef } from "react";
+import { Alert } from "../Alert";
 
-const Stopwatch = () => {
-  const [seconds, setSeconds] = useState(0);
-  const [minutes, setMinutes] = useState(0);
-  const [hours, setHours] = useState(0);
+const Stopwatch = ({
+  seconds,
+  setSeconds,
+  minutes,
+  setMinutes,
+  hours,
+  setHours,
+}) => {
   const [isActive, setIsActive] = useState(false);
   const [buttonText, setButtonText] = useState("Start");
 
   const secondsRef = useRef();
   const minutesRef = useRef();
   const hoursRef = useRef();
+  const messageRef = useRef();
 
   useEffect(() => {
     secondsRef.current = setInterval(() => {
@@ -25,29 +31,42 @@ const Stopwatch = () => {
           }
         }
       }
-    }, 50);
+    }, 1);
     return () => clearInterval(secondsRef.current);
-  }, [isActive, seconds, minutes]);
+  }, [isActive, seconds, minutes, setMinutes, setSeconds, setHours]);
+
+  useEffect(() => {
+    if (minutes === 3) {
+      messageRef.current.innerHTML = "Alert!!!";
+    }
+  }, [minutes]);
 
   const onStartCount = () => {
     if (isActive) {
-      setButtonText("Continue");
+      if (seconds === 0 && minutes === 0 && hours === 0) {
+        setButtonText("Start");
+        setIsActive(false);
+      } else {
+        setButtonText("Continue");
+        setIsActive(false);
+      }
     } else {
       setButtonText("Stop");
+      setIsActive(true);
     }
-    setIsActive(!isActive);
   };
 
   const onRestartCount = () => {
     setIsActive(false);
-    onStartCount();
     setSeconds(0);
     setMinutes(0);
     setHours(0);
+    onStartCount();
   };
 
   return (
     <div>
+      <Alert messageRef={messageRef} />
       <span ref={hoursRef}>{hours < 10 ? `0${hours}` : hours}:</span>
       <span ref={minutesRef}>{minutes < 10 ? `0${minutes}` : minutes}:</span>
       <span ref={secondsRef}>{seconds < 10 ? `0${seconds}` : seconds}</span>
