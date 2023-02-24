@@ -8,10 +8,20 @@ const Stopwatch = () => {
 
   useEffect(() => {
     intervalRef.current = setInterval(() => {
-      setSeconds((current) => current + 1);
+      if (isActive) {
+        setSeconds((current) => current + 1);
+      }
     }, 1000);
     return () => clearInterval(intervalRef.current);
-  }, []);
+  }, [isActive]);
+
+  const onStartCount = () => {
+    setIsActive(true);
+  };
+
+  const onStopCount = () => {
+    setIsActive(false);
+  };
 
   return (
     <div>
@@ -19,6 +29,8 @@ const Stopwatch = () => {
       <span>00:</span>
       <span>00:</span>
       <span>00</span>
+      <button onClick={onStartCount}>Start</button>
+      <button onClick={onStopCount}>Stop</button>
     </div>
   );
 };
