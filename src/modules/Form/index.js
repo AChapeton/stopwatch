@@ -29,6 +29,9 @@ const Form = ({ setUserTime, setIsActive }) => {
     // 4. Guardar en un estado global
     setUserTime(totalMs);
     // 5. Clean Inputs;
+    hoursRef.current.value = "";
+    minutesRef.current.value = "";
+    secondsRef.current.value = "";
   };
 
   return (
