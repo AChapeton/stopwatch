@@ -1,6 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const Stopwatch = ({ time, setTime, isActive, setIsActive }) => {
+  const [buttonText, setButtonText] = useState("Start");
   const intervalRef = useRef();
 
   useEffect(() => {
@@ -14,7 +15,13 @@ const Stopwatch = ({ time, setTime, isActive, setIsActive }) => {
   }, [isActive, setTime]);
 
   const onHandleTime = () => {
-    setIsActive(true);
+    if (!isActive) {
+      setIsActive(true);
+      setButtonText("Pause");
+    } else {
+      setIsActive(false);
+      setButtonText("Start");
+    }
   };
 
   const onHandleRestart = () => {
@@ -28,8 +35,8 @@ const Stopwatch = ({ time, setTime, isActive, setIsActive }) => {
       <span>{("0" + Math.floor((time / 60000) % 60)).slice(-2)}:</span>
       <span>{("0" + Math.floor((time / 1000) % 60)).slice(-2)}:</span>
       <span>{("0" + ((time / 10) % 100)).slice(-2)}</span>
-      <button onClick={onHandleTime}>Start</button>
-      <button onClick={() => setIsActive(false)}>Pause</button>
+      <button onClick={onHandleTime}>{buttonText}</button>
+      {/* <button onClick={() => setIsActive(false)}>Pause</button> */}
       <button onClick={onHandleRestart}>Restart</button>
     </div>
   );
