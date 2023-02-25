@@ -1,19 +1,22 @@
 import { useEffect, useRef } from "react";
 
-const Alert = ({ time, setIsActive }) => {
+const Alert = ({ time, setIsActive, userTime }) => {
   let messageRef = useRef();
+  console.log("Time" + time);
+  console.log("Usertime" + userTime);
 
   useEffect(() => {
-    if (time === 1000) {
-      messageRef.current.innerHTML = "Alert!!!";
-      setIsActive(false);
+    if (time > 0 && userTime > 0) {
+      if (time === userTime) {
+        messageRef.current.innerHTML = "Alert!!!";
+        setIsActive(false);
+      }
     }
-  }, [time, setIsActive]);
+  }, [time, setIsActive, userTime]);
 
-  if (time === 1000) {
+  if (time === userTime) {
     return <p ref={messageRef}></p>;
   }
-  // return <p ref={messageRef}></p>;
 };
 
 export { Alert };

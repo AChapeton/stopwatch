@@ -1,22 +1,23 @@
 import { useState } from "react";
 import { Stopwatch } from "./modules/Stopwatch";
+import { Alert } from "./modules/Alert";
+import { Form } from "./modules/Form";
 
 function App() {
-  const [miliseconds, setMiliseconds] = useState(0);
-  const [seconds, setSeconds] = useState(0);
-  const [minutes, setMinutes] = useState(0);
-  // const [time, setTime] = useState(0);
+  const [time, setTime] = useState(0);
+  const [userTime, setUserTime] = useState(0);
+  const [isActive, setIsActive] = useState(false);
 
   return (
     <div>
+      <Alert time={time} setIsActive={setIsActive} userTime={userTime} />
       <Stopwatch
-        miliseconds={miliseconds}
-        setMiliseconds={setMiliseconds}
-        seconds={seconds}
-        setSeconds={setSeconds}
-        minutes={minutes}
-        setMinutes={setMinutes}
+        time={time}
+        setTime={setTime}
+        isActive={isActive}
+        setIsActive={setIsActive}
       />
+      <Form setUserTime={setUserTime} />
     </div>
   );
 }
