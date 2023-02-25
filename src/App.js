@@ -17,7 +17,7 @@ function App() {
         isActive={isActive}
         setIsActive={setIsActive}
       />
-      <Form setUserTime={setUserTime} />
+      <Form setUserTime={setUserTime} setIsActive={setIsActive} />
     </div>
   );
 }
