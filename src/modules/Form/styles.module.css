@@ -21,6 +21,11 @@
   width: 150px;
 }
 
+.button:active {
+  background-color: #ffe500;
+  color: #1a1f38;
+}
+
 .input {
   margin-bottom: 10px;
   width: 325px;

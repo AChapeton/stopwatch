@@ -30,3 +30,8 @@
   margin: 0 10px 30px 10px;
   width: 100px;
 }
+
+.button:active {
+  background-color: #ffe500;
+  color: #1a1f38;
+}
