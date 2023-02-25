@@ -11,7 +11,6 @@ function App() {
 
   return (
     <div className={styles.container}>
-      <Alert time={time} setIsActive={setIsActive} userTime={userTime} />
       <Stopwatch
         time={time}
         setTime={setTime}
@@ -19,6 +18,7 @@ function App() {
         isActive={isActive}
         setIsActive={setIsActive}
       />
+      <Alert time={time} setIsActive={setIsActive} userTime={userTime} />
       <Form setUserTime={setUserTime} setIsActive={setIsActive} />
     </div>
   );
