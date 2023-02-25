@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Stopwatch } from "./modules/Stopwatch";
 import { Alert } from "./modules/Alert";
 import { Form } from "./modules/Form";
+import styles from "./styles.module.css";
 
 function App() {
   const [time, setTime] = useState(0);
@@ -9,7 +10,7 @@ function App() {
   const [isActive, setIsActive] = useState(false);
 
   return (
-    <div>
+    <div className={styles.container}>
       <Alert time={time} setIsActive={setIsActive} userTime={userTime} />
       <Stopwatch
         time={time}
