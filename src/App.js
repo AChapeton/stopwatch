@@ -14,6 +14,7 @@ function App() {
       <Stopwatch
         time={time}
         setTime={setTime}
+        setUserTime={setUserTime}
         isActive={isActive}
         setIsActive={setIsActive}
       />

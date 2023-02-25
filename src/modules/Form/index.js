@@ -5,7 +5,6 @@ const Form = ({ setUserTime, setIsActive }) => {
   const hoursRef = useRef();
   const minutesRef = useRef();
   const secondsRef = useRef();
-  const milisecondsRef = useRef();
 
   let hours = 0;
   let minutes = 0;
