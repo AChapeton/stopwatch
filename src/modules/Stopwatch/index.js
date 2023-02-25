@@ -2,76 +2,88 @@ import { useState, useEffect, useRef } from "react";
 import { Alert } from "../Alert";
 
 const Stopwatch = ({
+  miliseconds,
+  setMiliseconds,
   seconds,
   setSeconds,
   minutes,
   setMinutes,
-  hours,
-  setHours,
 }) => {
+  const [time, setTime] = useState(0);
   const [isActive, setIsActive] = useState(false);
   const [buttonText, setButtonText] = useState("Start");
 
+  const milisecondsRef = useRef();
   const secondsRef = useRef();
   const minutesRef = useRef();
-  const hoursRef = useRef();
-  const messageRef = useRef();
+  const intervalRef = useRef();
+
+  // useEffect(() => {
+  //   milisecondsRef.current = setInterval(() => {
+  //     if (isActive) {
+  //       setMiliseconds((current) => current + 1);
+  //       if (miliseconds >= 99) {
+  //         setMiliseconds((current) => (current = 0));
+  //         setSeconds((current) => current + 1);
+  //         if (seconds >= 59) {
+  //           setMiliseconds((current) => (current = 0));
+  //           setSeconds((current) => (current = 0));
+  //           setMinutes((current) => current + 1);
+  //         }
+  //       }
+  //     }
+  //   }, 10);
+  //   return () => clearInterval(milisecondsRef.current);
+  // }, [isActive, miliseconds, seconds, setMiliseconds, setSeconds, setMinutes]);
 
   useEffect(() => {
-    secondsRef.current = setInterval(() => {
-      if (isActive) {
-        setSeconds((current) => current + 1);
-        if (seconds >= 59) {
-          setSeconds((current) => (current = 0));
-          setMinutes((current) => current + 1);
-          if (minutes >= 59) {
-            setSeconds((current) => (current = 0));
-            setMinutes((current) => (current = 0));
-            setHours((current) => current + 1);
-          }
-        }
-      }
-    }, 1);
-    return () => clearInterval(secondsRef.current);
-  }, [isActive, seconds, minutes, setMinutes, setSeconds, setHours]);
-
-  useEffect(() => {
-    if (minutes === 3) {
-      messageRef.current.innerHTML = "Alert!!!";
-    }
-  }, [minutes]);
-
-  const onStartCount = () => {
     if (isActive) {
-      if (seconds === 0 && minutes === 0 && hours === 0) {
-        setButtonText("Start");
-        setIsActive(false);
-      } else {
-        setButtonText("Continue");
-        setIsActive(false);
-      }
+      intervalRef.current = setInterval(() => {
+        setTime((current) => current + 10);
+      }, 10);
     } else {
-      setButtonText("Stop");
-      setIsActive(true);
+      clearInterval(intervalRef.current);
     }
+  }, [isActive]);
+
+  const onHandleTime = () => {
+    setIsActive(true);
   };
 
-  const onRestartCount = () => {
+  // const onStartCount = () => {
+  //   if (isActive) {
+  //     if (miliseconds === 0 && seconds === 0 && minutes === 0) {
+  //       setButtonText("Start");
+  //       setIsActive(false);
+  //     } else {
+  //       setButtonText("Continue");
+  //       setIsActive(false);
+  //     }
+  //   } else {
+  //     setButtonText("Stop");
+  //     setIsActive(true);
+  //   }
+  // };
+
+  const onHandleRestart = () => {
     setIsActive(false);
-    setSeconds(0);
-    setMinutes(0);
-    setHours(0);
-    onStartCount();
+    setTime(0);
+    // setMiliseconds(0);
+    // setSeconds(0);
+    // setMinutes(0);
+    // onStartCount();
   };
 
   return (
     <div>
-      <Alert messageRef={messageRef} />
-      <span ref={hoursRef}>{hours < 10 ? `0${hours}` : hours}:</span>
-      <span ref={minutesRef}>{minutes < 10 ? `0${minutes}` : minutes}:</span>
-      <span ref={secondsRef}>{seconds < 10 ? `0${seconds}` : seconds}</span>
-      <button onClick={onStartCount}>{buttonText}</button>
-      <button onClick={onRestartCount}>Restart</button>
+      <Alert time={time} setIsActive={setIsActive} />
+      <span>{("0" + Math.floor((time / 3600000) % 60)).slice(-2)}:</span>
+      <span>{("0" + Math.floor((time / 60000) % 60)).slice(-2)}:</span>
+      <span>{("0" + Math.floor((time / 1000) % 60)).slice(-2)}:</span>
+      <span>{("0" + ((time / 10) % 100)).slice(-2)}</span>
+      <button onClick={onHandleTime}>Start</button>
+      <button onClick={() => setIsActive(false)}>Pause</button>
+      <button onClick={onHandleRestart}>Restart</button>
     </div>
   );
 };
