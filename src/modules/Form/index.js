@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import styles from "./styles.module.css";
 
 const Form = ({ setUserTime, setIsActive }) => {
   // 1. Obtener los valores por ref en cada input
@@ -32,13 +33,15 @@ const Form = ({ setUserTime, setIsActive }) => {
 
   return (
     <>
-      <label>Hours</label>
-      <input ref={hoursRef} type="number" />
-      <label>Minutes</label>
-      <input ref={minutesRef} type="number" />
-      <label>Seconds</label>
-      <input ref={secondsRef} type="number" />
-      <button onClick={onSetTime}>Set Time</button>
+      <label className={styles.label}>Hours</label>
+      <input className={styles.input} ref={hoursRef} type="number" />
+      <label className={styles.label}>Minutes</label>
+      <input className={styles.input} ref={minutesRef} type="number" />
+      <label className={styles.label}>Seconds</label>
+      <input className={styles.input} ref={secondsRef} type="number" />
+      <button className={styles.button} onClick={onSetTime}>
+        Set Time
+      </button>
     </>
   );
 };
