@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import styles from "./styles.module.css";
 
 const Alert = ({ time, setIsActive, userTime }) => {
   let messageRef = useRef();
@@ -20,7 +21,7 @@ const Alert = ({ time, setIsActive, userTime }) => {
   if (time === userTime) {
     return (
       <>
-        <p ref={messageRef}></p>
+        <p className={styles.message} ref={messageRef}></p>
       </>
     );
   }
